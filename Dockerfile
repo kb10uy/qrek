@@ -1,11 +1,11 @@
 # Build backend
-FROM rust:1.53-alpine AS builder
+FROM rust:1.53 AS builder
 WORKDIR /build
 COPY . .
 RUN cargo install --path . && strip /usr/local/cargo/bin/qrek
 
 # Runtime
-FROM alpine:3.13
+FROM debian:bullseye-slim
 LABEL maintainer="kb10uy"
 COPY --from=builder /usr/local/cargo/bin/qrek /usr/local/bin/qrek
 
